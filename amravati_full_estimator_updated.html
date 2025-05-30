@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amravati Home Construction Cost Estimator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+        }
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+        .rate-input-group input {
+            width: calc(50% - 8px); /* Adjust width for two inputs with a gap */
+        }
+    </style>
+</head>
+
+<body class="p-6 sm:p-8 lg:p-10" style="background: linear-gradient(to right, #e0eafc, #cfdef3); color: #1f2937;">
+    <div class="max-w-5xl mx-auto custom-card p-8 border-2 border-blue-500 rounded-2xl shadow-xl bg-white mb-8">
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-center text-blue-900 mb-4">
+            <span class="block">BY AR. PRABAL - 8830236556</span>
+            <span class="block text-2xl mt-2">Amravati Home Construction Cost Estimator</span>
+            <span class="block text-lg text-blue-700 mt-1">Rates applicable in Amravati, Nagpur, and all Vidarbha</span>
+        </h1>
+    </div>
+
+    <div class="max-w-4xl mx-auto bg-white shadow-xl rounded-2xl p-6 sm:p-8 lg:p-10">
+        <h1 class="text-3xl sm:text-4xl font-bold text-center text-gray-800 mb-6">
+            <span class="block">Amravati Home Construction Cost Estimator</span>
+            <span class="block text-xl sm:text-2xl text-blue-600 mt-2">Get Your Basic Estimate for 2025</span>
+        </h1>
+
+        <p class="text-center text-gray-600 mb-8">
+            This tool provides a basic estimate for residential construction costs in Amravati based on your desired built-up area.
+            Please note that these are estimates and actual costs may vary.
+        </p>
+
+        <div class="bg-blue-50 p-6 rounded-xl shadow-inner mb-8">
+            <div class="mb-6">
+                <label for="builtUpArea" class="block text-lg font-medium text-gray-700 mb-2">
+                    Enter your desired Built-Up Area (in sq.ft.):
+                </label>
+                <input type="number" id="builtUpArea" placeholder="e.g., 1000"
+                       class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 text-lg">
+                <p id="areaError" class="text-red-600 text-sm mt-2 hidden">Please enter a valid positive number for the built-up area.</p>
+            </div>
+
+            <div class="flex items-center mb-6">
+                <input type="checkbox" id="includeCarpentry" class="h-5 w-5 text-blue-600 rounded focus:ring-blue-500">
+                <label for="includeCarpentry" class="ml-3 text-lg font-medium text-gray-700">
+                    Include Carpentry Work (Doors/Windows frames & shutters, basic wood work)
+                </label>
+            </div>
+
+            <button id="calculateBtn"
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+                Calculate Estimate
+            </button>
+        </div>
+
+        <div class="bg-purple-50 p-6 rounded-xl shadow-inner mb-8">
+            <h2 class="text-2xl sm:text-2xl font-bold text-gray-800 mb-4 text-center">Customize Rates (per unit)</h2>
+            <p class="text-center text-gray-600 mb-6">Adjust the min and max rates for materials and labor as per your area's current market prices.</p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="col-span-1">
+                    <h3 class="text-lg font-semibold text-gray-700 mb-2">Material Rates</h3>
+                    <div class="space-y-3">
+                        <div class="rate-input-group flex items-center justify-between">
+                            <label for="rate-cement-min" class="text-gray-600 w-1/2">Cement (per bag):</label>
+                            <input type="number" id="rate-cement-min" class="px-2 py-1 border rounded-md text-sm" placeholder="Min">
+                            <input type="number" id="rate-cement-max" class="px-2 py-1 border rounded-md text-sm ml-2" placeholder="Max">
+                        </div>
+                        <div class="rate-input-group flex items-center justify-between">
+                            <label for="rate-riverSand-min" class="text-gray-600 w-1/2">River Sand (per cft):</label>
+                            <input type="number" id="rate-riverSand-min" class="px-2 py-1 border rounded-md text-sm" placeholder="Min">
+                            <input type="number" id="rate-riverSand-max" class="px-2 py-1 border rounded-md text-sm ml-2" placeholder="Max">
+                        </div>
+                        <div class="rate-input-group flex items-center justify-between">
+                            <label for="rate-steel-min" class="text-gray-600 w-1/2">Steel (per kg):</label>
+                            <input type="number" id="rate-steel-min" class="px-2 py-1 border rounded-md text-sm" placeholder="Min">
+                            <input type="number" id="rate-steel-max" class="px-2 py-1 border rounded-md text-sm ml-2" placeholder="Max">
+                        </div>
+                        <div class="rate-input-group flex items-center justify-between">
+                            <label for="rate-clayBricks-min" class="text-gray-600 w-1/2">Clay Bricks (per pc):</label>
+                            <input type="number" id="rate-clayBricks-min" class="px-2 py-1 border rounded-md text-sm" placeholder="Min">
+                            <input type="number" id="rate-clayBricks-max" class="px-2 py-1 border rounded-md text-sm ml-2" placeholder="Max">
+                        </div>
+                        <div class="rate-input-group flex items-center justify-between">
+                            <label for="rate-gravel-min" class="text-gray-600 w-1/2">Gravel (per cft):</label>
+                            <input type="number" id="rate-gravel-min" class="px-2 py-1 border rounded-md text-sm" placeholder="Min">
+                            <input type="number" id="rate-gravel-max" class="px-2 py-1 border rounded-md text-sm ml-2" placeholder="Max">
+                        </div>
+                        <div class="rate-input-group flex items-center justify-between">
+                            <label for="rate-floorTiles-min" class="text-gray-600 w-1/2">Floor Tiles (per sq.ft.):</label>
+                            <input type="number" id="rate-floorTiles-min" class="px-2 py-1 border rounded-md text-sm" placeholder="Min">
+                            <input type="number" id="rate-floorTiles-max" class="px-2 py-1 border rounded-md text-sm ml-2" placeholder="Max">
+                        </div>
+                        <div class="rate-input-group flex items-center justify-between">
+                            <label for="rate-paint-min" class="text-gray-600 w-1/2">Paint (per Litre):</label>
+                            <input type="number" id="rate-paint-min" class="px-2 py-1 border rounded-md text-sm" placeholder="Min">
+                            <input type="number" id="rate-paint-max" class="px-2 py-1 border rounded-md text-sm ml-2" placeholder="Max">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-span-1">
+                    <h3 class="text-lg font-semibold text-gray-700 mb-2">Labor & Carpentry Rates</h3>
+                    <div class="space-y-3">
+                        <div class="rate-input-group flex items-center justify-between">
+                            <label for="rate-unskilledLabor-min" class="text-gray-600 w-1/2">Unskilled Labor (per sq.ft.):</label>
+                            <input type="number" id="rate-unskilledLabor-min" class="px-2 py-1 border rounded-md text-sm" placeholder="Min">
+                            <input type="number" id="rate-unskilledLabor-max" class="px-2 py-1 border rounded-md text-sm ml-2" placeholder="Max">
+                        </div>
+                        <div class="rate-input-group flex items-center justify-between">
+                            <label for="rate-skilledLabor-min" class="text-gray-600 w-1/2">Skilled Labor (per sq.ft.):</label>
+                            <input type="number" id="rate-skilledLabor-min" class="px-2 py-1 border rounded-md text-sm" placeholder="Min">
+                            <input type="number" id="rate-skilledLabor-max" class="px-2 py-1 border rounded-md text-sm ml-2" placeholder="Max">
+                        </div>
+                        <div class="rate-input-group flex items-center justify-between">
+                            <label for="rate-timber-min" class="text-gray-600 w-1/2">Timber (per cu.ft.):</label>
+                            <input type="number" id="rate-timber-min" class="px-2 py-1 border rounded-md text-sm" placeholder="Min">
+                            <input type="number" id="rate-timber-max" class="px-2 py-1 border rounded-md text-sm ml-2" placeholder="Max">
+                        </div>
+                        <div class="rate-input-group flex items-center justify-between">
+                            <label for="rate-teakWood-min" class="text-gray-600 w-1/2">Teak Wood (per cu.ft.):</label>
+                            <input type="number" id="rate-teakWood-min" class="px-2 py-1 border rounded-md text-sm" placeholder="Min">
+                            <input type="number" id="rate-teakWood-max" class="px-2 py-1 border rounded-md text-sm ml-2" placeholder="Max">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center text-gray-700 text-md mb-8">
+            <p>Made by Ar. Prabal</p>
+            <p>Contact: 8830236556</p>
+        </div>
+
+        <div id="resultsSection" class="hidden">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6 text-center">Estimated Construction Cost Breakdown</h2>
+
+            <div class="bg-gray-50 p-6 rounded-xl shadow-md mb-8">
+                <h3 class="text-xl sm:text-2xl font-semibold text-gray-700 mb-4">I. Estimated Material Cost Breakdown</h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white rounded-lg shadow-sm">
+                        <thead>
+                            <tr class="bg-gray-200 text-gray-700 uppercase text-sm leading-normal">
+                                <th class="py-3 px-6 text-left">Material</th>
+                                <th class="py-3 px-6 text-center">Est. Quantity</th>
+                                <th class="py-3 px-6 text-center">Unit Rate (Range)</th>
+                                <th class="py-3 px-6 text-right">Est. Cost (Min)</th>
+                                <th class="py-3 px-6 text-right">Est. Cost (Max)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="materialCostTableBody" class="text-gray-600 text-base font-light">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-6 rounded-xl shadow-md mb-8">
+                <h3 class="text-xl sm:text-2xl font-semibold text-gray-700 mb-4">II. Estimated Labor Cost Breakdown</h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white rounded-lg shadow-sm">
+                        <thead>
+                            <tr class="bg-gray-200 text-gray-700 uppercase text-sm leading-normal">
+                                <th class="py-3 px-6 text-left">Labor Type</th>
+                                <th class="py-3 px-6 text-center">Unit Rate (Range)</th>
+                                <th class="py-3 px-6 text-right">Est. Cost (Min)</th>
+                                <th class="py-3 px-6 text-right">Est. Cost (Max)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="laborCostTableBody" class="text-gray-600 text-base font-light">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="carpentryCostSection" class="bg-gray-50 p-6 rounded-xl shadow-md mb-8 hidden">
+                <h3 class="text-xl sm:text-2xl font-semibold text-gray-700 mb-4">III. Optional Carpentry Work Cost</h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white rounded-lg shadow-sm">
+                        <thead>
+                            <tr class="bg-gray-200 text-gray-700 uppercase text-sm leading-normal">
+                                <th class="py-3 px-6 text-left">Material</th>
+                                <th class="py-3 px-6 text-center">Est. Quantity</th>
+                                <th class="py-3 px-6 text-center">Unit Rate (Range)</th>
+                                <th class="py-3 px-6 text-right">Est. Cost (Min)</th>
+                                <th class="py-3 px-6 text-right">Est. Cost (Max)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="carpentryCostTableBody" class="text-gray-600 text-base font-light">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="bg-blue-100 p-6 rounded-xl shadow-lg">
+                <h3 class="text-xl sm:text-2xl font-semibold text-blue-800 mb-4 text-center">Summary of Estimated Construction Cost (Material + Labor)</h3>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white rounded-lg shadow-sm">
+                        <thead>
+                            <tr class="bg-blue-200 text-blue-800 uppercase text-sm leading-normal">
+                                <th class="py-3 px-6 text-left">Quality Level</th>
+                                <th class="py-3 px-6 text-center">Est. Cost per sq.ft.</th>
+                                <th class="py-3 px-6 text-right">Total Est. Cost (Min)</th>
+                                <th class="py-3 px-6 text-right">Total Est. Cost (Max)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="summaryCostTableBody" class="text-gray-700 text-base font-medium">
+                            </tbody>
+                    </table>
+                </div>
+                <p class="text-sm text-gray-600 mt-4 text-center">
+                    Note: These overall quality estimates are indicative and cover the combined material and labor cost for a typical residential build.
+                </p>
+            </div>
+
+            <div class="bg-yellow-50 p-6 rounded-xl shadow-inner mt-8">
+                <h3 class="text-lg font-semibold text-yellow-800 mb-3">Important Notes:</h3>
+                <ul class="list-disc list-inside text-gray-700 text-sm space-y-2">
+                    <li><strong class="font-medium">Prices are estimates for 2025 and may vary</strong> based on brand, supplier, quality, market fluctuations, and specific design requirements.</li>
+                    <li><strong class="font-medium">Labor rates can fluctuate</strong> based on project complexity, location within Amravati, and labor availability.</li>
+                    <li><strong class="font-medium">The quantities per sq.ft. are approximate averages</strong> for typical residential construction. Actual consumption may vary based on structural design, wall thickness, specific finishes, and wastage.</li>
+                    <li>This estimate is for basic construction elements. <strong class="font-medium">Additional costs</strong> for specialized finishes, plumbing fixtures, electrical fittings, sanitary ware, painting labor, land cost, architectural fees, government approvals, and unforeseen expenses are <strong class="font-medium">NOT included</strong> in the detailed material breakdown but are implicitly considered in the overall "Quality Level" estimates provided in the summary.</li>
+                    <li><strong class="font-medium">Carpentry work</strong> (doors, windows, built-in furniture) is a highly variable cost and the quantities listed are indicative. Actual costs will depend on the type of wood, design complexity, and fittings.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const calculateBtn = document.getElementById('calculateBtn');
+            const builtUpAreaInput = document.getElementById('builtUpArea');
+            const includeCarpentryCheckbox = document.getElementById('includeCarpentry');
+            const areaError = document.getElementById('areaError');
+            const resultsSection = document.getElementById('resultsSection');
+            const materialCostTableBody = document.getElementById('materialCostTableBody');
+            const laborCostTableBody = document.getElementById('laborCostTableBody');
+            const carpentryCostSection = document.getElementById('carpentryCostSection');
+            const carpentryCostTableBody = document.getElementById('carpentryCostTableBody');
+            const summaryCostTableBody = document.getElementById('summaryCostTableBody');
+
+            // Define Amravati rates based on user's provided data (initial values for customizable inputs)
+            const initialAmravatiRates = {
+                cement: { min: 350, max: 420, unit: 'bag' },
+                riverSand: { min: 77, max: 92, unit: 'cft' },
+                steel: { min: 55, max: 63, unit: 'kg' },
+                clayBricks: { min: 11, max: 13, unit: 'pc' },
+                gravel: { min: 30, max: 36, unit: 'cft' },
+                floorTiles: { min: 65, max: 85, unit: 'sq.ft.' },
+                paint: { min: 250, max: 350, unit: 'Litre' },
+                timber: { min: 782, max: 978, unit: 'cu.ft.' },
+                teakWood: { min: 1708, max: 2135, unit: 'cu.ft.' },
+                unskilledLabor: { min: 210, max: 300, unit: 'sq.ft.' },
+                skilledLabor: { min: 280, max: 320, unit: 'sq.ft.' }
+            };
+                cement: { min: 350, max: 420, unit: 'bag' }, // per 50 kg bag
+                riverSand: { min: 7700 / 100, max: 9240 / 100, unit: 'cft' }, // per 100 cu.ft. converted to per cft
+                steel: { min: 54945 / 1000, max: 63187 / 1000, unit: 'kg' }, // per ton converted to per kg
+                clayBricks: { min: 11000 / 1000, max: 13000 / 1000, unit: 'pc' }, // per 1000 pcs converted to per pc
+                gravel: { min: 3000 / 100, max: 3600 / 100, unit: 'cft' }, // per 100 cu.ft. converted to per cft
+                floorTiles: { min: 65, max: 85, unit: 'sq.ft.' }, // per sq.ft.
+                paint: { min: 250, max: 350, unit: 'Litre' }, // Assumed material cost per Litre
+                timber: { min: 782, max: 978, unit: 'cu.ft.' }, // per cu.ft.
+                teakWood: { min: 1708, max: 2135, unit: 'cu.ft.' }, // per cu.ft.
+                unskilledLabor: { min: 210, max: 300, unit: 'sq.ft.' }, // per sq.ft.
+                skilledLabor: { min: 400, max: 600, unit: 'sq.ft.' } // per sq.ft.
+            };
+
+            // Populate customizable rate inputs with initial values
+            for (const key in initialAmravatiRates) {
+                document.getElementById(`rate-${key}-min`).value = initialAmravatiRates[key].min;
+                document.getElementById(`rate-${key}-max`).value = initialAmravatiRates[key].max;
+            }
+
+            // Define approximate material consumption rates per sq.ft. of built-up area
+            // These are simplified averages for a basic estimate.
+            const materialConsumption = {
+                cement: 0.4, // bags per sq.ft.
+                riverSand: 1.8, // cft per sq.ft.
+                steel: 4, // kg per sq.ft.
+                clayBricks: 11, // pcs per sq.ft. (overall house construction average)
+                gravel: 1.5, // cft per sq.ft. (for concrete work)
+                floorTiles: 1.1, // sq.ft. per sq.ft. (includes wastage)
+                paint: 0.18, // Litre per sq.ft. (for total painted area)
+                timber: 0.05, // cu.ft. per sq.ft. (for basic carpentry)
+                teakWood: 0.01 // cu.ft. per sq.ft. (for basic carpentry)
+            };
+
+            // Overall quality-based construction cost estimates (Material + Labor)
+            const overallQualityCosts = {
+                average: { label: 'Average Quality', rate: 1700 },
+                good: { label: 'Good Quality', rate: 1850 },
+                best: { label: 'Best Quality', rate: 2100 }
+            };
+
+            /**
+             * Formats a number to Indian Rupees (INR) currency format.
+             * @param {number} amount - The numeric amount to format.
+             * @returns {string} The formatted string (e.g., "₹ 1,23,456").
+             */
+            const formatCurrency = (amount) => {
+                if (typeof amount !== 'number' || isNaN(amount)) {
+                    return 'N/A';
+                }
+                return new Intl.NumberFormat('en-IN', {
+                    style: 'currency',
+                    currency: 'INR',
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                }).format(amount);
+            };
+
+            /**
+             * Creates a table row (<tr>) with given data.
+             * @param {Array<string | number>} data - An array of values for the table cells.
+             * @param {string} [align='left'] - Default alignment for cells.
+             * @returns {HTMLTableRowElement} The created table row element.
+             */
+            const createTableRow = (data, align = 'left') => {
+                const row = document.createElement('tr');
+                row.classList.add('border-b', 'border-gray-200', 'hover:bg-gray-100');
+                data.forEach((item, index) => {
+                    const cell = document.createElement('td');
+                    cell.classList.add('py-3', 'px-6');
+                    // Apply text alignment based on index or specific needs
+                    if (index === 0) { // First column (material/labor type)
+                        cell.classList.add('text-left');
+                    } else if (typeof item === 'number' || (typeof item === 'string' && item.includes('₹'))) { // Numbers or currency
+                        cell.classList.add('text-right');
+                    } else { // Other text
+                        cell.classList.add('text-center');
+                    }
+                    cell.textContent = item;
+                    row.appendChild(cell);
+                });
+                return row;
+            };
+
+            /**
+             * Reads the current rates from the customizable input fields.
+             * @returns {object} An object containing the current min/max rates for each category.
+             */
+            const getCurrentRates = () => {
+                const currentRates = {};
+                for (const key in initialAmravatiRates) {
+                    const minInput = document.getElementById(`rate-${key}-min`);
+                    const maxInput = document.getElementById(`rate-${key}-max`);
+                    currentRates[key] = {
+                        min: parseFloat(minInput.value),
+                        max: parseFloat(maxInput.value),
+                        unit: initialAmravatiRates[key].unit // Keep original unit for display
+                    };
+                }
+                return currentRates;
+            };
+
+            /**
+             * Calculates and displays the construction cost estimate.
+             */
+            const calculateEstimate = () => {
+                const builtUpArea = parseFloat(builtUpAreaInput.value);
+                const currentRates = getCurrentRates(); // Get rates from input fields
+
+                // Input validation
+                if (isNaN(builtUpArea) || builtUpArea <= 0) {
+                    areaError.classList.remove('hidden');
+                    resultsSection.classList.add('hidden');
+                    return;
+                } else {
+                    areaError.classList.add('hidden');
+                }
+
+                // Clear previous results
+                materialCostTableBody.innerHTML = '';
+                laborCostTableBody.innerHTML = '';
+                carpentryCostTableBody.innerHTML = '';
+                summaryCostTableBody.innerHTML = '';
+
+                // --- Material Cost Calculation ---
+                const materials = [
+                    { name: 'Cement', key: 'cement', unitDisplay: 'bags' },
+                    { name: 'River Sand', key: 'riverSand', unitDisplay: 'cft' },
+                    { name: 'Steel (TMT)', key: 'steel', unitDisplay: 'kg' },
+                    { name: 'Clay Bricks', key: 'clayBricks', unitDisplay: 'pcs' },
+                    { name: 'Gravel', key: 'gravel', unitDisplay: 'cft' },
+                    { name: 'Floor Tiles', key: 'floorTiles', unitDisplay: 'sq.ft.' },
+                    { name: 'Paint (Material)', key: 'paint', unitDisplay: 'Litres' }
+                ];
+
+                materials.forEach(material => {
+                    const quantity = materialConsumption[material.key] * builtUpArea;
+                    const minCost = quantity * currentRates[material.key].min;
+                    const maxCost = quantity * currentRates[material.key].max;
+
+                    materialCostTableBody.appendChild(createTableRow([
+                        material.name,
+                        `${quantity.toFixed(2)} ${material.unitDisplay}`,
+                        `${formatCurrency(currentRates[material.key].min)} – ${formatCurrency(currentRates[material.key].max)} / ${currentRates[material.key].unit}`,
+                        formatCurrency(minCost),
+                        formatCurrency(maxCost)
+                    ]));
+                });
+
+                // --- Labor Cost Calculation ---
+                const laborTypes = [
+                    { name: 'Unskilled Labor', key: 'unskilledLabor' },
+                    { name: 'Skilled Labor', key: 'skilledLabor' }
+                ];
+
+                laborTypes.forEach(labor => {
+                    const minCost = builtUpArea * currentRates[labor.key].min;
+                    const maxCost = builtUpArea * currentRates[labor.key].max;
+
+                    laborCostTableBody.appendChild(createTableRow([
+                        labor.name,
+                        `${formatCurrency(currentRates[labor.key].min)} – ${formatCurrency(currentRates[labor.key].max)} / ${currentRates[labor.key].unit}`,
+                        formatCurrency(minCost),
+                        formatCurrency(maxCost)
+                    ]));
+                });
+
+                // --- Optional Carpentry Cost Calculation ---
+                if (includeCarpentryCheckbox.checked) {
+                    carpentryCostSection.classList.remove('hidden');
+                    const carpentryMaterials = [
+                        { name: 'Timber', key: 'timber', unitDisplay: 'cu.ft.' },
+                        { name: 'Teak Wood', key: 'teakWood', unitDisplay: 'cu.ft.' }
+                    ];
+
+                    carpentryMaterials.forEach(material => {
+                        const quantity = materialConsumption[material.key] * builtUpArea;
+                        const minCost = quantity * currentRates[material.key].min;
+                        const maxCost = quantity * currentRates[material.key].max;
+
+                        carpentryCostTableBody.appendChild(createTableRow([
+                            material.name,
+                            `${quantity.toFixed(2)} ${material.unitDisplay}`,
+                            `${formatCurrency(currentRates[material.key].min)} – ${formatCurrency(currentRates[material.key].max)} / ${currentRates[material.key].unit}`,
+                            formatCurrency(minCost),
+                            formatCurrency(maxCost)
+                        ]));
+                    });
+                } else {
+                    carpentryCostSection.classList.add('hidden');
+                }
+
+                // --- Summary of Estimated Construction Cost ---
+                for (const qualityKey in overallQualityCosts) {
+                    const quality = overallQualityCosts[qualityKey];
+                    const minTotalCost = builtUpArea * quality.rate;
+                    const maxTotalCost = builtUpArea * quality.rate; // Keeping min/max same for overall rate as per previous logic
+
+                    summaryCostTableBody.appendChild(createTableRow([
+                        quality.label,
+                        `${formatCurrency(quality.rate)} / sq.ft.`,
+                        formatCurrency(minTotalCost),
+                        formatCurrency(maxTotalCost)
+                    ]));
+                }
+
+                resultsSection.classList.remove('hidden');
+            };
+
+            // Event listener for the calculate button
+            calculateBtn.addEventListener('click', calculateEstimate);
+
+            // Optional: Recalculate if carpentry checkbox changes after initial calculation
+            includeCarpentryCheckbox.addEventListener('change', () => {
+                if (!resultsSection.classList.contains('hidden')) {
+                    calculateEstimate(); // Recalculate to show/hide carpentry section
+                }
+            });
+        });
+    </script>
+</body>
+</html>
